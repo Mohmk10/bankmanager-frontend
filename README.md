@@ -1,59 +1,48 @@
-# BankmanagerFrontend
+# 🏦 BankManager - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+Application de gestion bancaire développée avec Angular 20 et Spring Boot.
 
-## Development server
+## 🚀 Technologies
 
-To start a local development server, run:
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
+## 📋 Fonctionnalités
+
+- 🔐 Authentification JWT
+- 👥 Gestion des clients
+- 💳 Gestion des comptes (Épargne/Chèque)
+- 💸 Transactions (Dépôts/Retraits)
+- 📊 Dashboard avec statistiques
+
+## 🛠️ Installation
 ```bash
+# Installer les dépendances
+npm install
+
+# Lancer le serveur de développement
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🌐 Backend
 
-## Code scaffolding
+Repository backend : [bankmanager-backend](https://github.com/Mohmk10/bankmanager-backend)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+API : `http://localhost:8080`
 
+## 📦 Build
 ```bash
-ng generate component component-name
+# Build pour production
+ng build --configuration production
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 👤 Auteur
 
-```bash
-ng generate --help
-```
+**Mohamed MAKANKOUYATÉ**
 
-## Building
+## 📄 Licence
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+MIT
