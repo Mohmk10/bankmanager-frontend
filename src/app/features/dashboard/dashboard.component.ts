@@ -47,12 +47,59 @@ import { DashboardData } from './models/dashboard.model';
             </app-card>
           </div>
 
+          <app-card title="Actions rapides" customClass="mb-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <button
+                routerLink="/comptes/new"
+                class="flex flex-col items-center justify-center p-6 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors group">
+                <svg class="w-12 h-12 text-primary-600 mb-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                <span class="text-sm font-semibold text-gray-900">Créer un compte</span>
+              </button>
+
+              <button
+                routerLink="/comptes"
+                class="flex flex-col items-center justify-center p-6 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors group">
+                <svg class="w-12 h-12 text-blue-600 mb-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                </svg>
+                <span class="text-sm font-semibold text-gray-900">Lister des comptes</span>
+              </button>
+
+              <button
+                routerLink="/transactions/new"
+                class="flex flex-col items-center justify-center p-6 bg-green-50 hover:bg-green-100 rounded-lg transition-colors group">
+                <svg class="w-12 h-12 text-green-600 mb-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-sm font-semibold text-gray-900">Nouvelle transaction</span>
+              </button>
+
+              <button
+                (click)="onLogout()"
+                class="flex flex-col items-center justify-center p-6 bg-red-50 hover:bg-red-100 rounded-lg transition-colors group">
+                <svg class="w-12 h-12 text-red-600 mb-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>
+                <span class="text-sm font-semibold text-gray-900">Quitter</span>
+              </button>
+            </div>
+          </app-card>
+
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <app-card title="Comptes récents">
+            <app-card>
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-900">Comptes récents</h3>
+                <a routerLink="/comptes" class="text-sm text-primary-600 hover:text-primary-800 font-medium">
+                  Voir plus →
+                </a>
+              </div>
               @if (data()?.comptesRecents && data()!.comptesRecents.length > 0) {
                 <div class="space-y-4">
-                  @for (compte of data()?.comptesRecents; track compte.id) {
-                    <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                  @for (compte of (data()?.comptesRecents ?? []).slice(0, 5); track compte.id) {
+                    <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                         [routerLink]="['/comptes', compte.id]">
                       <div>
                         <p class="font-medium text-gray-900">{{ compte.numeroCompte }}</p>
                         <p class="text-sm text-gray-500">{{ compte.clientNomComplet }}</p>
@@ -72,10 +119,16 @@ import { DashboardData } from './models/dashboard.model';
               }
             </app-card>
 
-            <app-card title="Transactions récentes">
+            <app-card>
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-900">Transactions récentes</h3>
+                <a routerLink="/transactions" class="text-sm text-primary-600 hover:text-primary-800 font-medium">
+                  Voir plus →
+                </a>
+              </div>
               @if (data()?.transactionsRecentes && data()!.transactionsRecentes.length > 0) {
                 <div class="space-y-4">
-                  @for (transaction of data()?.transactionsRecentes; track transaction.id) {
+                  @for (transaction of (data()?.transactionsRecentes ?? []).slice(0, 5); track transaction.id) {
                     <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                       <div>
                         <p class="font-medium text-gray-900">{{ transaction.idTransaction }}</p>
@@ -122,5 +175,11 @@ export class DashboardComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  onLogout(): void {
+    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      window.location.href = '/auth/login';
+    }
   }
 }

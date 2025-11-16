@@ -188,9 +188,21 @@ export class ClientFormComponent implements OnInit {
         : this.clientService.createClient(this.clientForm.value);
 
       request$.subscribe({
-        next: () => {
+        next: (client) => {
           this.loading.set(false);
-          this.router.navigate(['/clients']);
+
+          if (this.isEditMode()) {
+            this.router.navigate(['/clients']);
+          } else {
+            // Nouveau client : rediriger vers création de compte
+            if (confirm('Client créé avec succès ! Voulez-vous créer un compte pour ce client maintenant ?')) {
+              this.router.navigate(['/comptes/new'], {
+                queryParams: { clientId: client.id }
+              });
+            } else {
+              this.router.navigate(['/clients']);
+            }
+          }
         },
         error: (error) => {
           this.loading.set(false);

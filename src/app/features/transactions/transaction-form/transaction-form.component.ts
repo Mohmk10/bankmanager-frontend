@@ -8,6 +8,7 @@ import { TransactionService } from '../services/transaction.service';
 import { CompteService } from '../../comptes/services/compte.service';
 import { TypeTransaction } from '../models/transaction.model';
 import { Compte } from '../../comptes/models/compte.model';
+import { getCompteStatut, getStatutClass } from '../../comptes/utils/compte.utils';
 
 @Component({
   selector: 'app-transaction-form',
@@ -75,7 +76,7 @@ import { Compte } from '../../comptes/models/compte.model';
                       <p class="text-gray-500">Type</p>
                       <span class="px-2 py-1 text-xs font-semibold rounded-full"
                             [class]="selectedCompte()!.typeCompte === 'EPARGNE' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'">
-                        {{ selectedCompte()!.typeCompte }}
+                            {{ selectedCompte()!.typeCompte }}
                       </span>
                     </div>
                     <div>
@@ -83,6 +84,13 @@ import { Compte } from '../../comptes/models/compte.model';
                       <p class="font-bold text-lg text-primary-600">
                         {{ selectedCompte()!.solde | number:'1.2-2' }} FCFA
                       </p>
+                    </div>
+                    <div>
+                      <p class="text-gray-500">Statut</p>
+                      <span class="px-2 py-1 text-xs font-semibold rounded-full"
+                            [class]="getStatutClass(getStatut(selectedCompte()!))">
+          {{ getStatut(selectedCompte()!) }}
+        </span>
                     </div>
                     @if (selectedCompte()!.typeCompte === 'CHEQUE') {
                       <div>
@@ -242,6 +250,14 @@ export class TransactionFormComponent implements OnInit {
     montant: [0, [Validators.required, Validators.min(1)]],
     description: ['']
   });
+
+  getStatut(compte: Compte): string {
+    return getCompteStatut(compte);
+  }
+
+  getStatutClass(statut: string): string {
+    return getStatutClass(statut);
+  }
 
   ngOnInit(): void {
     this.loadComptes();
